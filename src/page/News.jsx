@@ -4,7 +4,7 @@ import Wrapper from '../components/Wrapper'
 const News = () => {
     return (
         <Wrapper>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 px-2.5'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 px-2.5 pb-10'>
                 <NewsCard/>
                 <NewsCard/>
                 <NewsCard/>
