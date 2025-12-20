@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import Wrapper from '../components/Wrapper'
 import { useNewsContext } from '../context/NewsContext'
+import Loader from '../components/Loader';
 
 const News = () => {
 
-    const { news, SetNews, fetchNews } = useNewsContext();
+    const { news, SetNews, fetchNews, loading } = useNewsContext();
 
     //load data on initial render
     useEffect(() => {
@@ -14,6 +15,7 @@ const News = () => {
         })()
     }, [])
 
+    if(loading) return <Loader/>
 
 
 
