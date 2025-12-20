@@ -1,36 +1,50 @@
-import React from 'react'
+import { useEffect } from 'react';
 import Wrapper from '../components/Wrapper'
+import { useNewsContext } from '../context/NewsContext'
 
 const News = () => {
+
+    const { news, SetNews, fetchNews } = useNewsContext();
+
+    //load data on initial render
+    useEffect(() => {
+        (async () => {
+            const data = await fetchNews()
+            SetNews(data.articles)
+        })()
+    }, [])
+
+
+
+
     return (
         <Wrapper>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 px-2.5 pb-10'>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
-                <NewsCard/>
+                {news.map((newsDetails, index) => {
+                    if(!newsDetails.urlToImage) return null;
+                    return (
+                        <NewsCard details={newsDetails} key={index} />
+                    )
+                })}
             </div>
         </Wrapper>
     )
 }
 
-const NewsCard = () => {
+const NewsCard = ({ details }) => {
     return (
         <div className="card bg-base-300 shadow-sm">
             <figure>
                 <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                className='w-full aspect-video object-contain'
+                    src={details?.urlToImage}
                     alt="Shoes" />
             </figure>
             <div className="card-body">
-                <h2 className="card-title">Card Title</h2>
-                <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                <h2 className="card-title line-clamp-2">{details?.title}</h2>
+                <p className='line-clamp-3'>{details?.description}</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
+                    <button className="btn-info btn btn-soft mt-5" onClick={() => (window.open(details.url))}>Read More</button>
                 </div>
             </div>
         </div>
